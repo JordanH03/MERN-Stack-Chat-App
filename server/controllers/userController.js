@@ -1,3 +1,4 @@
+import cloudinary from "../lib/cloudinary.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/User.js";
 import bcrypt from "bycryptjs";
@@ -69,4 +70,35 @@ export const login = async (req, res) => {
 // Controller to vhevk if user is authenticated
 export const checkAuth = (req, res) => {
   res.json({ success: true, user: req.user });
+};
+
+// Controller to update user profile
+export const updateProfile = async (req, res) => {
+  try {
+    const { profilePic, bio, fullName } = req.body;
+
+    const userID = req.user._id;
+    let updatedUser;
+
+    if (!profilePic) {
+      updatedUser = await User.findByIdAndUpdate(
+        userID,
+        { bio, fullname },
+        { new: true },
+      );
+    } else {
+      const upload = await cloudinary.uploader.upload(profilePic);
+
+      updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { profilePic: upload.secure_url, bio, fullName },
+        { new: true },
+      );
+    }
+
+    res.json({ success: true, user: updatedUser });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
 };
