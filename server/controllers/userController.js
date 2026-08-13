@@ -67,7 +67,7 @@ export const login = async (req, res) => {
   }
 };
 
-// Controller to vhevk if user is authenticated
+// Controller to chevk if user is authenticated
 export const checkAuth = (req, res) => {
   res.json({ success: true, user: req.user });
 };
@@ -77,12 +77,12 @@ export const updateProfile = async (req, res) => {
   try {
     const { profilePic, bio, fullName } = req.body;
 
-    const userID = req.user._id;
+    const userId = req.user._id;
     let updatedUser;
 
     if (!profilePic) {
       updatedUser = await User.findByIdAndUpdate(
-        userID,
+        userId,
         { bio, fullname },
         { new: true },
       );
