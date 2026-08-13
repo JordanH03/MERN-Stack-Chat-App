@@ -57,7 +57,7 @@ export const login = async (req, res) => {
 
     res.json({
       success: true,
-      userData: userData,
+      userData,
       token,
       message: "Login successfully",
     });
@@ -83,7 +83,7 @@ export const updateProfile = async (req, res) => {
     if (!profilePic) {
       updatedUser = await User.findByIdAndUpdate(
         userId,
-        { bio, fullname },
+        { bio, fullName },
         { new: true },
       );
     } else {
