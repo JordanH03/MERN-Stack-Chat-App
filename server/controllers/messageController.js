@@ -84,7 +84,7 @@ export const sendMessage = async (req, res) => {
       senderId,
       receiverId,
       text,
-      imag: imageUrl,
+      image: imageUrl,
     });
 
     // Emit new message to receiver socket

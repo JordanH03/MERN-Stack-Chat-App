@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import assets from "../assets/assets";
+import assets, { userDummyData } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { ChatContext } from "../../context/ChatContext";
@@ -32,7 +32,7 @@ const SideBar = () => {
   return (
     <div
       className={`bg-[#8185B2]/10 h-full p-5 rounded-r-xl overflow-y-scroll 
-        text-white ${selectedUser ? "max-hd:hidden" : ""}`}
+        text-white ${selectedUser ? "max-md:hidden" : ""}`}
     >
       <div className="pb-5">
         <div className="flex justify-between items-center">
@@ -74,10 +74,11 @@ const SideBar = () => {
           <div
             onClick={() => {
               setSelectedUser(user);
+              setUnseenMessages((prev) => ({ ...prev, [user._id]: 0 }));
             }}
             key={index}
             className={`relative flex items-center gap-2 p-2 pl-4 rounded cursor-pointer 
-                max-sm:text-sm ${(selectedUser?._id === user._id) & "bg-[#282142]/50"}`}
+                max-sm:text-sm ${selectedUser?._id === user._id && "bg-[#282142]/50"}`}
           >
             <img
               src={user?.profilePic || assets.avatar_icon}

@@ -7,7 +7,7 @@ export const ChatContext = createContext();
 export const ChatProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUsers] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [unseenMessages, setUnseenMessages] = useState({});
 
   const { socket, axios } = useContext(AuthContext);
@@ -45,7 +45,7 @@ export const ChatProvider = ({ children }) => {
         messageData,
       );
       if (data.success) {
-        setMessages((prevMessages) => [...prevMessages, data, newMessage]);
+        setMessages((prevMessages) => [...prevMessages, data.newMessage]);
       } else {
         toast.error(data.message);
       }
@@ -89,9 +89,9 @@ export const ChatProvider = ({ children }) => {
     users,
     selectedUser,
     getUsers,
-    setMessages,
+    getMessages,
     sendMessage,
-    setSelectedUsers,
+    setSelectedUser,
     unseenMessages,
     setUnseenMessages,
   };
